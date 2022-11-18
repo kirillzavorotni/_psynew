@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    image: psynew_nodejs_image
+    container_name: psynew_nodejs_container
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "9003:8080"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - app-network
+    command: /home/node/app/node_modules/.bin/nodemon app.js
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    image: psynew_postgres_image
+    container_name: psynew_postgres_container
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+    driver: local
+  postgres_data:
+    driver: local
