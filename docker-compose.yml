@@ -5,12 +5,12 @@ services:
     build:
       context: .
       dockerfile: docker/nodejs/Dockerfile
-    image: psynew_nodejs_image
-    container_name: psynew_nodejs_container
+    image: ${NODEJS_BACK_IMAGE_NAME}
+    container_name: ${NODEJS_BACK_CONTAINER_NAME}
     restart: unless-stopped
     env_file: .env
     ports:
-      - "9003:8080"
+      - ${BACK_APP_EXTERNAL_PORT}:8080
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
@@ -24,13 +24,13 @@ services:
     build:
       context: .
       dockerfile: docker/postgres/Dockerfile
-    image: psynew_postgres_image
-    container_name: psynew_postgres_container
+    image: ${POSTGRES_BACK_IMAGE_NAME}
+    container_name: ${POSTGRES_BACK_CONTAINER_NAME}
     restart: unless-stopped
     env_file:
       - .env
     ports:
-      - "5433:5432"
+      - ${POSTGRES_EXTERNAL_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

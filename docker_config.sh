@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# application prefix
+APP_PREFIX="psynew"
+
+# docker entity ports
+BACK_APP_EXTERNAL_PORT="3002"
+POSTGRES_EXTERNAL_PORT="5433"
+
+# docker entity postfix
+IMAGE_ENTITY="image"
+CONTAINER_ENTITY="container"
+
+# docker entity names
+NODEJS_BACK="nodejs-back"
+POSTGRES_BACK="postgres-back"
+
+# concat docker entity names
+NODEJS_BACK_IMAGE_NAME="${APP_PREFIX}-${NODEJS_BACK}-${IMAGE_ENTITY}"
+POSTGRES_BACK_IMAGE_NAME="${APP_PREFIX}-${POSTGRES_BACK}-${IMAGE_ENTITY}"
+NODEJS_BACK_CONTAINER_NAME="${APP_PREFIX}-${NODEJS_BACK}-${CONTAINER_ENTITY}"
+POSTGRES_BACK_CONTAINER_NAME="${APP_PREFIX}-${POSTGRES_BACK}-${CONTAINER_ENTITY}"
+
+# container names
+declare -A containerNames
+containerNames["NODEJS_BACK_CONTAINER_NAME"]=$NODEJS_BACK_CONTAINER_NAME
+containerNames["POSTGRES_BACK_CONTAINER_NAME"]=$POSTGRES_BACK_CONTAINER_NAME
+
+# images name
+declare -A imageNames
+imageNames["NODEJS_BACK_IMAGE_NAME"]=$NODEJS_BACK_IMAGE_NAME
+imageNames["POSTGRES_BACK_IMAGE_NAME"]=$POSTGRES_BACK_IMAGE_NAME
